@@ -1,0 +1,10 @@
+digraph CallGraph {
+"FuncA";
+"FuncB";
+"FuncB" -> "Getpasswd";
+"main";
+"main" -> "FuncA";
+"main" -> "Getpasswd";
+"main" -> "FuncB";
+"Getpasswd";
+}
