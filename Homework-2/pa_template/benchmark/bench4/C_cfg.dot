@@ -1,0 +1,16 @@
+digraph "C_cfg"{
+	label="C_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="C"];
+	N2 [shape=rectangle, color=black,label="exit"];
+	N3 [shape=rectangle, color=black,label="  %1 = call i32 (i8*, ...) @printf(i8* noundef getelementptr inbounds ([3 x i8], [3 x i8]* @.str, i64 0, i64 0)), !dbg !18"];
+	N4 [shape=rectangle, color=black,label="  ret void, !dbg !19"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N2[color=black,label=""];
+}

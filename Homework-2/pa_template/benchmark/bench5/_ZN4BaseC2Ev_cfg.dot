@@ -1,0 +1,24 @@
+digraph "_ZN4BaseC2Ev_cfg"{
+	label="_ZN4BaseC2Ev_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="_ZN4BaseC2Ev"];
+	N2 [shape=rectangle, color=black,label="exit"];
+	N3 [shape=rectangle, color=black,label="  %2 = alloca %class.Base*, align 8"];
+	N4 [shape=rectangle, color=black,label="  store %class.Base* %0, %class.Base** %2, align 8"];
+	N5 [shape=rectangle, color=black,label="  %3 = load %class.Base*, %class.Base** %2, align 8"];
+	N6 [shape=rectangle, color=black,label="  %4 = bitcast %class.Base* %3 to i32 (...)***, !dbg !879"];
+	N7 [shape=rectangle, color=black,label="  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [3 x i8*] }, { [3 x i8*] }* @_ZTV4Base, i32 0, inrange i32 0, i32 2) to i32 (...)**), i32 (...)*** %4, align 8, !dbg !879"];
+	N8 [shape=rectangle, color=black,label="  ret void, !dbg !879"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N5[color=black,label=""];
+	N5 -> N6[color=black,label=""];
+	N6 -> N7[color=black,label=""];
+	N7 -> N8[color=black,label=""];
+	N8 -> N2[color=black,label=""];
+}

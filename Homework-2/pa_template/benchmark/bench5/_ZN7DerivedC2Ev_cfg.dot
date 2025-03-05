@@ -1,0 +1,28 @@
+digraph "_ZN7DerivedC2Ev_cfg"{
+	label="_ZN7DerivedC2Ev_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="_ZN7DerivedC2Ev"];
+	N2 [shape=rectangle, color=black,label="exit"];
+	N3 [shape=rectangle, color=black,label="  %2 = alloca %class.Derived*, align 8"];
+	N4 [shape=rectangle, color=black,label="  store %class.Derived* %0, %class.Derived** %2, align 8"];
+	N5 [shape=rectangle, color=black,label="  %3 = load %class.Derived*, %class.Derived** %2, align 8"];
+	N6 [shape=rectangle, color=black,label="  %4 = bitcast %class.Derived* %3 to %class.Base*, !dbg !879"];
+	N7 [shape=rectangle, color=black,label="  call void @_ZN4BaseC2Ev(%class.Base* noundef nonnull align 8 dereferenceable(8) %4) #3, !dbg !879"];
+	N8 [shape=rectangle, color=black,label="  %5 = bitcast %class.Derived* %3 to i32 (...)***, !dbg !879"];
+	N9 [shape=rectangle, color=black,label="  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [3 x i8*] }, { [3 x i8*] }* @_ZTV7Derived, i32 0, inrange i32 0, i32 2) to i32 (...)**), i32 (...)*** %5, align 8, !dbg !879"];
+	N10 [shape=rectangle, color=black,label="  ret void, !dbg !879"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N5[color=black,label=""];
+	N5 -> N6[color=black,label=""];
+	N6 -> N7[color=black,label=""];
+	N7 -> N8[color=black,label=""];
+	N8 -> N9[color=black,label=""];
+	N9 -> N10[color=black,label=""];
+	N10 -> N2[color=black,label=""];
+}

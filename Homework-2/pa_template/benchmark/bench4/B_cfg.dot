@@ -1,0 +1,16 @@
+digraph "B_cfg"{
+	label="B_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="B"];
+	N2 [shape=rectangle, color=black,label="exit"];
+	N3 [shape=rectangle, color=black,label="  call void @C(), !dbg !18"];
+	N4 [shape=rectangle, color=black,label="  ret void, !dbg !19"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N2[color=black,label=""];
+}

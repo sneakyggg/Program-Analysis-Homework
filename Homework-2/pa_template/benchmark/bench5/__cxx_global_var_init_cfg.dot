@@ -1,0 +1,18 @@
+digraph "__cxx_global_var_init_cfg"{
+	label="__cxx_global_var_init_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="__cxx_global_var_init"];
+	N2 [shape=rectangle, color=black,label="exit"];
+	N3 [shape=rectangle, color=black,label="  call void @_ZNSt8ios_base4InitC1Ev(%\"class.std::ios_base::Init\"* noundef nonnull align 1 dereferenceable(1) @_ZStL8__ioinit), !dbg !875"];
+	N4 [shape=rectangle, color=black,label="  %1 = call i32 @__cxa_atexit(void (i8*)* bitcast (void (%\"class.std::ios_base::Init\"*)* @_ZNSt8ios_base4InitD1Ev to void (i8*)*), i8* getelementptr inbounds (%\"class.std::ios_base::Init\", %\"class.std::ios_base::Init\"* @_ZStL8__ioinit, i32 0, i32 0), i8* @__dso_handle) #3, !dbg !877"];
+	N5 [shape=rectangle, color=black,label="  ret void, !dbg !875"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N5[color=black,label=""];
+	N5 -> N2[color=black,label=""];
+}

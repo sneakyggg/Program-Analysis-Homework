@@ -1,0 +1,12 @@
+digraph "cg"{
+	label="cg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="sum"];
+	N2 [shape=rectangle, color=black,label="main"];
+
+
+	// Define the edges
+	N2 -> N1[color=black,label=""];
+}

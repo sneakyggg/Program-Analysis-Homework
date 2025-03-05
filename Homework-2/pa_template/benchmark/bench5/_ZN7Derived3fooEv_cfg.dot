@@ -1,0 +1,24 @@
+digraph "_ZN7Derived3fooEv_cfg"{
+	label="_ZN7Derived3fooEv_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="_ZN7Derived3fooEv"];
+	N2 [shape=rectangle, color=black,label="exit"];
+	N3 [shape=rectangle, color=black,label="  %2 = alloca %class.Derived*, align 8"];
+	N4 [shape=rectangle, color=black,label="  store %class.Derived* %0, %class.Derived** %2, align 8"];
+	N5 [shape=rectangle, color=black,label="  %3 = load %class.Derived*, %class.Derived** %2, align 8"];
+	N6 [shape=rectangle, color=black,label="  %4 = call noundef nonnull align 8 dereferenceable(8) %\"class.std::basic_ostream\"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%\"class.std::basic_ostream\"* noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, i8* noundef getelementptr inbounds ([15 x i8], [15 x i8]* @.str.1, i64 0, i64 0)), !dbg !878"];
+	N7 [shape=rectangle, color=black,label="  %5 = call noundef nonnull align 8 dereferenceable(8) %\"class.std::basic_ostream\"* @_ZNSolsEPFRSoS_E(%\"class.std::basic_ostream\"* noundef nonnull align 8 dereferenceable(8) %4, %\"class.std::basic_ostream\"* (%\"class.std::basic_ostream\"*)* noundef @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_), !dbg !879"];
+	N8 [shape=rectangle, color=black,label="  ret void, !dbg !880"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N5[color=black,label=""];
+	N5 -> N6[color=black,label=""];
+	N6 -> N7[color=black,label=""];
+	N7 -> N8[color=black,label=""];
+	N8 -> N2[color=black,label=""];
+}
