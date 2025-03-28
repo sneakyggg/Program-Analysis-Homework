@@ -1,0 +1,11 @@
+digraph "cg"{
+	label="cg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="[1]foo"];
+	N2 [shape=rectangle, color=black,label="[2]main"];
+
+
+	// Define the edges
+}

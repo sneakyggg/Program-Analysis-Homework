@@ -1,0 +1,37 @@
+digraph "w-cg"{
+	label="w-cg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="[1]FuncA"];
+	N2 [shape=rectangle, color=black,label="[2]printf"];
+	N3 [shape=rectangle, color=black,label="[3]sprintf"];
+	N4 [shape=rectangle, color=black,label="[4]fopen"];
+	N5 [shape=rectangle, color=black,label="[5]random"];
+	N6 [shape=rectangle, color=black,label="[6]fwrite"];
+	N7 [shape=rectangle, color=black,label="[7]fclose"];
+	N8 [shape=rectangle, color=black,label="[8]FuncB"];
+	N9 [shape=rectangle, color=black,label="[9]exit"];
+	N10 [shape=rectangle, color=black,label="[10]main"];
+	N11 [shape=rectangle, color=black,label="[11]atoi"];
+	N12 [shape=rectangle, color=black,label="[12]Getpasswd"];
+
+
+	// Define the edges
+	N1 -> N2[color=black,label=""];
+	N1 -> N3[color=black,label=""];
+	N1 -> N4[color=black,label=""];
+	N1 -> N5[color=black,label=""];
+	N1 -> N6[color=black,label=""];
+	N1 -> N7[color=black,label=""];
+	N8 -> N2[color=black,label=""];
+	N8 -> N9[color=black,label=""];
+	N8 -> N12[color=black,label=""];
+	N10 -> N1[color=black,label=""];
+	N10 -> N2[color=black,label=""];
+	N10 -> N8[color=black,label=""];
+	N10 -> N11[color=black,label=""];
+	N10 -> N12[color=black,label=""];
+	N12 -> N2[color=black,label=""];
+	N12 -> N5[color=black,label=""];
+}

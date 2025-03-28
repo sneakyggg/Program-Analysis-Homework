@@ -1,0 +1,40 @@
+digraph "main_cfg"{
+	label="main_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="[1]main"];
+	N2 [shape=rectangle, color=black,label="[2]exit"];
+	N3 [shape=rectangle, color=black,label="[3]  %1 = alloca i32"];
+	N4 [shape=rectangle, color=black,label="[4]  %2 = alloca i32"];
+	N5 [shape=rectangle, color=black,label="[5]  %3 = alloca i32"];
+	N6 [shape=rectangle, color=black,label="[6]  %4 = alloca void (i32*)*"];
+	N7 [shape=rectangle, color=black,label="[7]  store i32 0, i32* %1"];
+	N8 [shape=rectangle, color=black,label="[8]  store i32 5, i32* %2"];
+	N9 [shape=rectangle, color=black,label="[9]  store i32 15, i32* %3"];
+	N10 [shape=rectangle, color=black,label="[10]  store void (i32*)* @foo, void (i32*)** %4"];
+	N11 [shape=rectangle, color=black,label="[11]  %5 = load void (i32*)*, void (i32*)** %4"];
+	N12 [shape=rectangle, color=black,label="[12]  call void @execute(void (i32*)* noundef %5, i32* noundef %2)"];
+	N13 [shape=rectangle, color=black,label="[13]  store void (i32*)* @bar, void (i32*)** %4"];
+	N14 [shape=rectangle, color=black,label="[14]  %6 = load void (i32*)*, void (i32*)** %4"];
+	N15 [shape=rectangle, color=black,label="[15]  call void @execute(void (i32*)* noundef %6, i32* noundef %3)"];
+	N16 [shape=rectangle, color=black,label="[16]  ret i32 0"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N5[color=black,label=""];
+	N5 -> N6[color=black,label=""];
+	N6 -> N7[color=black,label=""];
+	N7 -> N8[color=black,label=""];
+	N8 -> N9[color=black,label=""];
+	N9 -> N10[color=black,label=""];
+	N10 -> N11[color=black,label=""];
+	N11 -> N12[color=black,label=""];
+	N12 -> N13[color=black,label=""];
+	N13 -> N14[color=black,label=""];
+	N14 -> N15[color=black,label=""];
+	N15 -> N16[color=black,label=""];
+	N16 -> N2[color=black,label=""];
+}

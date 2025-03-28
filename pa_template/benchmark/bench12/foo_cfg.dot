@@ -1,0 +1,22 @@
+digraph "foo_cfg"{
+	label="foo_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="[1]foo"];
+	N2 [shape=rectangle, color=black,label="[2]exit"];
+	N3 [shape=rectangle, color=black,label="[3]  %2 = alloca i32*"];
+	N4 [shape=rectangle, color=black,label="[4]  store i32* %0, i32** %2"];
+	N5 [shape=rectangle, color=black,label="[5]  %3 = load i32*, i32** %2"];
+	N6 [shape=rectangle, color=black,label="[6]  store i32 10, i32* %3"];
+	N7 [shape=rectangle, color=black,label="[7]  ret void"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N5[color=black,label=""];
+	N5 -> N6[color=black,label=""];
+	N6 -> N7[color=black,label=""];
+	N7 -> N2[color=black,label=""];
+}

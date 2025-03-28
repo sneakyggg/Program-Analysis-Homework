@@ -1,0 +1,69 @@
+digraph "w-pag"{
+	label="w-pag";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=purple,label="[1]sum"];
+	N2 [shape=rectangle, color=purple,label="[2]main"];
+	N3 [shape=rectangle, color=black,label="[3]  %2 = alloca i32"];
+	N4 [shape=rectangle, color=black,label="[4]  %3 = alloca i32"];
+	N5 [shape=rectangle, color=black,label="[5]  %4 = alloca i32"];
+	N6 [shape=rectangle, color=black,label="[6]i32 %0"];
+	N7 [shape=rectangle, color=black,label="[7]i32 0"];
+	N8 [shape=rectangle, color=black,label="[8]  %5 = load i32, i32* %2"];
+	N9 [shape=rectangle, color=black,label="[9]  %8 = load i32, i32* %2"];
+	N10 [shape=rectangle, color=black,label="[10]  %9 = mul nsw i32 %8, 2"];
+	N11 [shape=rectangle, color=black,label="[11]  %11 = load i32, i32* %2"];
+	N12 [shape=rectangle, color=black,label="[12]  %12 = sub nsw i32 %11, 1"];
+	N13 [shape=rectangle, color=black,label="[13]  %15 = load i32, i32* %4"];
+	N14 [shape=rectangle, color=black,label="[14]  %16 = load i32, i32* %2"];
+	N15 [shape=rectangle, color=black,label="[15]  %19 = load i32, i32* %2"];
+	N16 [shape=rectangle, color=black,label="[16]  %20 = load i32, i32* %3"];
+	N17 [shape=rectangle, color=black,label="[17]  %21 = add nsw i32 %20, %19"];
+	N18 [shape=rectangle, color=black,label="[18]  %26 = load i32, i32* %3"];
+	N19 [shape=rectangle, color=black,label="[19]  %23 = load i32, i32* %4"];
+	N20 [shape=rectangle, color=black,label="[20]  %24 = add nsw i32 %23, 1"];
+	N21 [shape=rectangle, color=black,label="[21]i8** %1"];
+	N22 [shape=rectangle, color=black,label="[22]  %3 = alloca i32"];
+	N23 [shape=rectangle, color=black,label="[23]  %4 = alloca i32"];
+	N24 [shape=rectangle, color=black,label="[24]  %5 = alloca i8**"];
+	N25 [shape=rectangle, color=black,label="[25]  %6 = alloca i32"];
+	N26 [shape=rectangle, color=black,label="[26]i32 %0"];
+	N27 [shape=rectangle, color=black,label="[27]  %7 = load i32, i32* %4"];
+	N28 [shape=rectangle, color=black,label="[28]  %8 = load i32, i32* %6"];
+
+
+	// Define the edges
+	N1 -> N1[color=green,label=""];
+	N2 -> N2[color=green,label=""];
+	N3 -> N3[color=green,label=""];
+	N3 -> N8[color=orange,label=""];
+	N3 -> N9[color=orange,label=""];
+	N3 -> N11[color=orange,label=""];
+	N3 -> N14[color=orange,label=""];
+	N3 -> N15[color=orange,label=""];
+	N4 -> N4[color=green,label=""];
+	N4 -> N16[color=orange,label=""];
+	N4 -> N18[color=orange,label=""];
+	N5 -> N5[color=green,label=""];
+	N5 -> N13[color=orange,label=""];
+	N5 -> N19[color=orange,label=""];
+	N6 -> N3[color=red,label=""];
+	N7 -> N4[color=red,label=""];
+	N7 -> N5[color=red,label=""];
+	N7 -> N22[color=red,label=""];
+	N10 -> N3[color=red,label=""];
+	N12 -> N3[color=red,label=""];
+	N17 -> N4[color=red,label=""];
+	N20 -> N5[color=red,label=""];
+	N21 -> N24[color=red,label=""];
+	N22 -> N22[color=green,label=""];
+	N23 -> N23[color=green,label=""];
+	N23 -> N27[color=orange,label=""];
+	N24 -> N24[color=green,label=""];
+	N25 -> N25[color=green,label=""];
+	N25 -> N28[color=orange,label=""];
+	N26 -> N23[color=red,label=""];
+	N27 -> N25[color=red,label=""];
+	N28 -> N6[color=blue,label=""];
+}

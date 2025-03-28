@@ -1,0 +1,34 @@
+digraph "w-cg"{
+	label="w-cg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="[1]_GLOBAL__sub_I_main.cpp"];
+	N2 [shape=rectangle, color=black,label="[2]__cxx_global_var_init"];
+	N3 [shape=rectangle, color=black,label="[3]_ZNSt8ios_base4InitC1Ev"];
+	N4 [shape=rectangle, color=black,label="[4]_ZNSt8ios_base4InitD1Ev"];
+	N5 [shape=rectangle, color=black,label="[5]__cxa_atexit"];
+	N6 [shape=rectangle, color=black,label="[6]_Z12callFunctionP4Base"];
+	N7 [shape=rectangle, color=black,label="[7]main"];
+	N8 [shape=rectangle, color=black,label="[8]_ZN4BaseC2Ev"];
+	N9 [shape=rectangle, color=black,label="[9]_ZN7DerivedC2Ev"];
+	N10 [shape=rectangle, color=black,label="[10]_ZN7Derived3fooEv"];
+	N11 [shape=rectangle, color=black,label="[11]_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc"];
+	N12 [shape=rectangle, color=black,label="[12]_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_"];
+	N13 [shape=rectangle, color=black,label="[13]_ZNSolsEPFRSoS_E"];
+	N14 [shape=rectangle, color=black,label="[14]_ZN4Base3fooEv"];
+
+
+	// Define the edges
+	N1 -> N2[color=black,label=""];
+	N2 -> N3[color=black,label=""];
+	N2 -> N5[color=black,label=""];
+	N7 -> N6[color=black,label=""];
+	N7 -> N8[color=black,label=""];
+	N7 -> N9[color=black,label=""];
+	N9 -> N8[color=black,label=""];
+	N10 -> N11[color=black,label=""];
+	N10 -> N13[color=black,label=""];
+	N14 -> N11[color=black,label=""];
+	N14 -> N13[color=black,label=""];
+}

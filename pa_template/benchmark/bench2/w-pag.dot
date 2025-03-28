@@ -1,0 +1,30 @@
+digraph "w-pag"{
+	label="w-pag";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=purple,label="[1]main"];
+	N2 [shape=rectangle, color=black,label="[2]i8** %1"];
+	N3 [shape=rectangle, color=black,label="[3]  %3 = alloca i32"];
+	N4 [shape=rectangle, color=black,label="[4]  %4 = alloca i32"];
+	N5 [shape=rectangle, color=black,label="[5]  %5 = alloca i8**"];
+	N6 [shape=rectangle, color=black,label="[6]  %6 = alloca i32"];
+	N7 [shape=rectangle, color=black,label="[7]i32 0"];
+	N8 [shape=rectangle, color=black,label="[8]i32 %0"];
+	N9 [shape=rectangle, color=black,label="[9]  %7 = load i32, i32* %4"];
+	N10 [shape=rectangle, color=black,label="[10]  %8 = load i32, i32* %6"];
+
+
+	// Define the edges
+	N1 -> N1[color=green,label=""];
+	N2 -> N5[color=red,label=""];
+	N3 -> N3[color=green,label=""];
+	N4 -> N4[color=green,label=""];
+	N4 -> N9[color=orange,label=""];
+	N5 -> N5[color=green,label=""];
+	N6 -> N6[color=green,label=""];
+	N6 -> N10[color=orange,label=""];
+	N7 -> N3[color=red,label=""];
+	N8 -> N4[color=red,label=""];
+	N9 -> N6[color=red,label=""];
+}

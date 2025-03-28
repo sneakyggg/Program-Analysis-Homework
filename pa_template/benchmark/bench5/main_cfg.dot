@@ -1,0 +1,28 @@
+digraph "main_cfg"{
+	label="main_cfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="[1]main"];
+	N2 [shape=rectangle, color=black,label="[2]exit"];
+	N3 [shape=rectangle, color=black,label="[3]  %1 = alloca %class.Base"];
+	N4 [shape=rectangle, color=black,label="[4]  %2 = alloca %class.Derived"];
+	N5 [shape=rectangle, color=black,label="[5]  call void @_ZN4BaseC2Ev(%class.Base* noundef nonnull align 8 dereferenceable(8) %1) #3"];
+	N6 [shape=rectangle, color=black,label="[6]  call void @_ZN7DerivedC2Ev(%class.Derived* noundef nonnull align 8 dereferenceable(8) %2) #3"];
+	N7 [shape=rectangle, color=black,label="[7]  call void @_Z12callFunctionP4Base(%class.Base* noundef %1)"];
+	N8 [shape=rectangle, color=black,label="[8]  %3 = bitcast %class.Derived* %2 to %class.Base*"];
+	N9 [shape=rectangle, color=black,label="[9]  call void @_Z12callFunctionP4Base(%class.Base* noundef %3)"];
+	N10 [shape=rectangle, color=black,label="[10]  ret i32 0"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N5[color=black,label=""];
+	N5 -> N6[color=black,label=""];
+	N6 -> N7[color=black,label=""];
+	N7 -> N8[color=black,label=""];
+	N8 -> N9[color=black,label=""];
+	N9 -> N10[color=black,label=""];
+	N10 -> N2[color=black,label=""];
+}

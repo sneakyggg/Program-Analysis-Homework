@@ -1,0 +1,14 @@
+digraph "w-cg"{
+	label="w-cg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="[1]foo"];
+	N2 [shape=rectangle, color=black,label="[2]run"];
+	N3 [shape=rectangle, color=black,label="[3]main"];
+
+
+	// Define the edges
+	N2 -> N1[color=black,label=""];
+	N3 -> N2[color=black,label=""];
+}

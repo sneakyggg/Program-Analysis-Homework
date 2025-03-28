@@ -1,0 +1,46 @@
+digraph "w-pag"{
+	label="w-pag";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=purple,label="[1]add"];
+	N2 [shape=rectangle, color=purple,label="[2]main"];
+	N3 [shape=rectangle, color=black,label="[3]i32* %0"];
+	N4 [shape=rectangle, color=black,label="[4]  %2 = alloca i32*"];
+	N5 [shape=rectangle, color=black,label="[5]  %3 = load i32*, i32** %2"];
+	N6 [shape=rectangle, color=black,label="[6]  %4 = load i32, i32* %3"];
+	N7 [shape=rectangle, color=black,label="[7]i8** %1"];
+	N8 [shape=rectangle, color=black,label="[8]  %3 = alloca i32"];
+	N9 [shape=rectangle, color=black,label="[9]  %4 = alloca i32"];
+	N10 [shape=rectangle, color=black,label="[10]  %5 = alloca i8**"];
+	N11 [shape=rectangle, color=black,label="[11]  %6 = alloca i32 (i32*)*"];
+	N12 [shape=rectangle, color=black,label="[12]i32 0"];
+	N13 [shape=rectangle, color=black,label="[13]i32 %0"];
+	N14 [shape=rectangle, color=black,label="[14]  %7 = load i32 (i32*)*, i32 (i32*)** %6"];
+
+
+	// Define the edges
+	N1 -> N1[color=green,label=""];
+	N1 -> N11[color=red,label=""];
+	N2 -> N2[color=green,label=""];
+	N3 -> N4[color=red,label=""];
+	N3 -> N9[color=grey,label=""];
+	N4 -> N4[color=green,label=""];
+	N4 -> N5[color=orange,label=""];
+	N4 -> N9[color=grey,label=""];
+	N5 -> N4[color=grey,label=""];
+	N5 -> N6[color=orange,label=""];
+	N5 -> N9[color=grey,label=""];
+	N7 -> N10[color=red,label=""];
+	N8 -> N8[color=green,label=""];
+	N9 -> N3[color=blue,label=""];
+	N9 -> N9[color=green,label=""];
+	N10 -> N10[color=green,label=""];
+	N11 -> N1[color=grey,label=""];
+	N11 -> N11[color=green,label=""];
+	N11 -> N14[color=orange,label=""];
+	N12 -> N8[color=red,label=""];
+	N13 -> N9[color=red,label=""];
+	N14 -> N1[color=grey,label=""];
+	N14 -> N11[color=grey,label=""];
+}
