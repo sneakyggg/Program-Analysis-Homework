@@ -1,6 +1,0 @@
-/home/cs6890/CS5890-6890-Program-Analysis/pa_template/build/CMakeFiles/intrinsics_gen.dir
-/home/cs6890/CS5890-6890-Program-Analysis/pa_template/build/CMakeFiles/omp_gen.dir
-/home/cs6890/CS5890-6890-Program-Analysis/pa_template/build/CMakeFiles/acc_gen.dir
-/home/cs6890/CS5890-6890-Program-Analysis/pa_template/build/CMakeFiles/myAnalysis.dir
-/home/cs6890/CS5890-6890-Program-Analysis/pa_template/build/CMakeFiles/edit_cache.dir
-/home/cs6890/CS5890-6890-Program-Analysis/pa_template/build/CMakeFiles/rebuild_cache.dir
