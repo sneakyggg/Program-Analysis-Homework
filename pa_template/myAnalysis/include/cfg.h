@@ -13,14 +13,31 @@
 #include "llvm_wrapper.h"
 
 using namespace std;
+
+typedef enum EDGE_TYPE 
+{
+    EDGE_NONE = 0,
+    EDGE_CFG  = 1<<0,
+    EDGE_DFG  = 1<<1,
+    EDGE_ICFG = 1<<2,
+    EDGE_IDFG = 1<<3
+}EDGE_TYPE;
+
 class CFGNode;  // Forward declaration
 class CFGEdge : public GenericEdge<CFGNode> 
 {
 public:
     CFGEdge(CFGNode* s, CFGNode* d)
-        : GenericEdge<CFGNode>(s, d) {}
+        : GenericEdge<CFGNode>(s, d) 
+    {
+        edgeType = EDGE_CFG;
+        values.clear ();
+    }
     
     ~CFGEdge() {}
+
+    unsigned edgeType;
+    set<llvm::Value*> values;
 };
 
 class CFGNode : public GenericNode<CFGEdge> 

@@ -23,6 +23,7 @@ namespace llvm
 class LLVM 
 {
 public:
+    typedef set<llvm::Value*> ValueSet;
     typedef set<llvm::GlobalVariable*>::iterator gv_iterator;
     typedef set<llvm::Function*>::iterator func_iterator;
 
@@ -250,7 +251,80 @@ public:
         return false;
     }
 
+    inline void getDefUse(llvm::Instruction *I, ValueSet &def, ValueSet &use) 
+    {
+        if (llvm::StoreInst *SI = llvm::dyn_cast<llvm::StoreInst>(I)) 
+        {
+            // *def = use
+            llvm::Value* useOp = SI->getValueOperand();
+            llvm::Value* defOp = SI->getPointerOperand();
 
+            def.insert(defOp);
+            use.insert(useOp);
+            use.insert(defOp);         
+        }
+        else if (llvm::CallInst *CI = llvm::dyn_cast<llvm::CallInst>(I))
+        {
+            // def = call (...)
+            if (!CI->getType()->isVoidTy())
+            {
+                def.insert(CI);
+            }        
+
+            llvm::Value* calledVal = CI->getCalledOperand()->stripPointerCasts();
+            use.insert(calledVal);
+            for (unsigned i = 0; i < CI->arg_size(); ++i)
+            {
+                llvm::Value *operand = CI->getArgOperand(i);
+                use.insert(operand);         
+            }
+        }
+        else if (llvm::PHINode *PN = llvm::dyn_cast<llvm::PHINode>(I))
+        {
+            // PHI nodes: def = [...]
+            def.insert(PN);
+            for (unsigned i = 0; i < PN->getNumIncomingValues(); ++i) 
+            {
+                llvm::Value *incoming = PN->getIncomingValue(i);
+                use.insert(incoming);   
+            }
+        }
+        else if (llvm::BranchInst *BI = llvm::dyn_cast<llvm::BranchInst>(I))
+        {
+            // Branch instruction (conditional): condition is used
+            if (BI->isConditional()) 
+            {
+                llvm::Value* cond = BI->getCondition();
+                use.insert(cond);      
+            }
+        }
+        else if (llvm::ReturnInst *RI = llvm::dyn_cast<llvm::ReturnInst>(I))
+        {
+            // Return instruction: returned value is used
+            if (llvm::Value* retVal = RI->getReturnValue())
+            {
+                use.insert(retVal);
+            }          
+        }
+        else if (auto *allocaInst = llvm::dyn_cast<llvm::AllocaInst>(I))
+        {
+            def.insert(I);
+        }
+        else 
+        {
+            // For non-store instructions
+            if (!I->getType()->isVoidTy())
+            {
+                def.insert(I);
+            }
+
+            for (unsigned i = 0; i < I->getNumOperands(); ++i)
+            {
+                llvm::Value *operand = I->getOperand(i);
+                use.insert(operand);              
+            }
+        }
+    }
 
 private:
     void loadFunctions() 

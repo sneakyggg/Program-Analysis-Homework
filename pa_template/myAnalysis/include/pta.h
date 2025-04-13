@@ -40,6 +40,16 @@ public:
         return ptsSet.empty ();
     }
 
+    inline std::unordered_set<PAGNode*>::iterator begin ()
+    {
+        return ptsSet.begin ();
+    }
+
+    inline std::unordered_set<PAGNode*>::iterator end ()
+    {
+        return ptsSet.end ();
+    }
+
 private:
     std::unordered_set<PAGNode*> ptsSet;
 };

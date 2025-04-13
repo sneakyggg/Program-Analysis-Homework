@@ -1,0 +1,49 @@
+digraph "dfg"{
+	label="dfg";
+
+
+	// Define the nodes
+	N1 [shape=rectangle, color=black,label="[1]C( )"];
+	N2 [shape=rectangle, color=black,label="[2]exit"];
+	N3 [shape=rectangle, color=black,label="[3]  %1 = call i32 (i8*, ...) @printf(i8* noundef getelementptr inbounds ([3 x i8], [3 x i8]* @.str, i64 0, i64 0))"];
+	N4 [shape=rectangle, color=black,label="[4]  ret void"];
+	N5 [shape=rectangle, color=black,label="[5]B( )"];
+	N6 [shape=rectangle, color=black,label="[6]exit"];
+	N7 [shape=rectangle, color=black,label="[7]  call void @C()"];
+	N8 [shape=rectangle, color=black,label="[8]  ret void"];
+	N9 [shape=rectangle, color=black,label="[9]main( i32 %0 i8** %1 )"];
+	N10 [shape=rectangle, color=black,label="[10]exit"];
+	N11 [shape=rectangle, color=black,label="[11]  %3 = alloca i32"];
+	N12 [shape=rectangle, color=black,label="[12]  %4 = alloca i8**"];
+	N13 [shape=rectangle, color=black,label="[13]  store i32 %0, i32* %3"];
+	N14 [shape=rectangle, color=black,label="[14]  store i8** %1, i8*** %4"];
+	N15 [shape=rectangle, color=black,label="[15]  %5 = load void (...)*, void (...)** @func"];
+	N16 [shape=rectangle, color=black,label="[16]  call void (...) %5()"];
+	N17 [shape=rectangle, color=black,label="[17]  ret i32 0"];
+
+
+	// Define the edges
+	N1 -> N3[color=black,label=""];
+	N2 -> N7[color=black,label=""];
+	N3 -> N4[color=black,label=""];
+	N4 -> N2[color=black,label=""];
+	N5 -> N7[color=black,label=""];
+	N6 -> N16[color=black,label=""];
+	N7 -> N1[color=black,label=""];
+	N7 -> N8[color=black,label=""];
+	N8 -> N6[color=black,label=""];
+	N9 -> N11[color=black,label=""];
+	N9 -> N13[color=green,label=""];
+	N9 -> N14[color=green,label=""];
+	N11 -> N12[color=black,label=""];
+	N11 -> N13[color=green,label=""];
+	N12 -> N13[color=black,label=""];
+	N12 -> N14[color=green,label=""];
+	N13 -> N14[color=black,label=""];
+	N14 -> N15[color=black,label=""];
+	N15 -> N16[color=black,label=""];
+	N15 -> N16[color=green,label=""];
+	N16 -> N5[color=black,label=""];
+	N16 -> N17[color=black,label=""];
+	N17 -> N10[color=black,label=""];
+}

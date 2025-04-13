@@ -7,30 +7,38 @@
 
 using namespace std;
 
+typedef enum PTA_TYPE
+{
+    ANDERSEN = 0,
+    STEENSGAARD = 1,
+    LANDI = 2
+}PTA_TYPE;
 
 // on-the-fly pointer analysis
 class OTFPTA
 {
 public:
-    OTFPTA (ICFG&icfg)
+    OTFPTA (ICFG& icfg, bool dumpGraph=true)
     {
         wICFG = &icfg;
 
         wPAG  = new PAG (wICFG);
         assert (wPAG != NULL);
         wPAG->build ();
+
+        this->dumpGraph = dumpGraph;
     }
 
     ~OTFPTA () 
     {
         delete wPAG;
+        delete pta;
     }
 
-    void solve ()
+    void solve (PTA_TYPE type = ANDERSEN)
     {
         vector<PAGNode*> initNodes = {};
-        PTA *pta = new Andersen (wPAG);
-        assert (pta != NULL);
+        pta = initPTA (type);
 
         while (true)
         {
@@ -58,19 +66,44 @@ public:
         }
 
         // dump graphs
-        dumpCG ();
-        dumpICFG ();
-        dumpPAG ();
+        if (dumpGraph)
+        {
+            dumpCG ();
+            dumpICFG ();
+            dumpPAG ();
+        }  
+    }
 
-        delete pta;
-        pta = NULL;
+    const PTS& getPTS(llvm::Value *val) const
+    {
+        assert (pta != NULL && wPAG != NULL);
+        PAGNode* pNode = wPAG->getValueNode (val);
+        return pta->getPTS (pNode);
     }
 
 private:
     ICFG *wICFG;
     PAG  *wPAG;
+    PTA  *pta;
+    bool dumpGraph;
 
 private:
+    inline PTA* initPTA (PTA_TYPE type)
+    {
+        switch (type)
+        {
+            case ANDERSEN:
+                pta = new Andersen (wPAG);
+                assert (pta != NULL);
+                break;
+            default:
+                cout<<"Unsupported PTA type: "<<type<<"\n";
+                exit (1);
+        }
+        
+        return pta;
+    }
+
     inline void dumpCG ()
     {
         CGVisual vis ("w-cg", wICFG->getCG());

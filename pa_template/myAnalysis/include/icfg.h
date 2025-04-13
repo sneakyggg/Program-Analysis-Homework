@@ -69,6 +69,15 @@ public:
     cfg_iteratoir cfg_end () { return func2CFG.end (); }
     LLVM* getLLVMParser () { return llvmParser; }
     CG* getCG () { return cg; }
+    inline CFG* getCFG (llvm::Function* F)
+    {
+        auto it = func2CFG.find (F);
+        if (it == func2CFG.end ())
+        {
+            return NULL;
+        }
+        return it->second;
+    }
     
 private:
     void buildCFGs()
@@ -133,17 +142,7 @@ private:
     map<llvm::Function*, CFG*> func2CFG;
 
 private:
-    inline CFG* getCFG (llvm::Function* F)
-    {
-        auto it = func2CFG.find (F);
-        if (it == func2CFG.end ())
-        {
-            return NULL;
-        }
-        return it->second;
-    }
-
-    vector<CFGNode*> getCallsiteNodes(CFG* callerCFG, CGNode* cgNode, llvm::Function* calleeFunc) 
+    inline vector<CFGNode*> getCallsiteNodes(CFG* callerCFG, CGNode* cgNode, llvm::Function* calleeFunc) 
     {
         vector<CFGNode*> csNodes;
         for (auto itCs = cgNode->begin (); itCs != cgNode->end (); itCs++) 

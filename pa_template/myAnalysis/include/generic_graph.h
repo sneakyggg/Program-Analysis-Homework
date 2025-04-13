@@ -235,6 +235,19 @@ public:
         return;
     }
 
+    inline EdgeTy* getEdge(NodeTy* src, NodeTy* dst) 
+    {
+        for (auto it = src->outEdgeBegin(); it != src->outEdgeEnd(); it++) 
+        {
+            EdgeTy* edge = *it;
+            if (edge->getDstNode() == dst) 
+            {
+                return edge;
+            }
+        }
+        return NULL;
+    }
+
     virtual void build() {}
 };
 

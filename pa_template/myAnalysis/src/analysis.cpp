@@ -10,6 +10,7 @@
 #include "cfg.h"
 #include "icfg.h"
 #include "otf_pta.h"
+#include "dfg.h"
 
 using namespace llvm;
 map<llvm::Value*, set<llvm::CallBase*>> CG::value2IndirectCS;
@@ -192,8 +193,23 @@ void runPTA (LLVM& llvmParser)
     ICFG icfg (&llvmParser);
     icfg.build ();
 
-    OTFPTA op (icfg);
-    op.solve ();
+    OTFPTA pta (icfg);
+    pta.solve ();
+}
+
+void runDFA (LLVM& llvmParser)
+{
+    ICFG icfg (&llvmParser);
+    icfg.build ();
+
+    OTFPTA pta (icfg, false);
+    pta.solve ();
+
+    DFG dfg (icfg, pta);
+    dfg.build ();
+    
+    DFGVisual vis("dfg", &dfg);
+    vis.witeGraph();
 }
 
 
@@ -231,5 +247,10 @@ void analyzeModule(LLVM& llvmParser, string type)
     if (type == "pta")
     {
         runPTA (llvmParser);
+    }
+
+    if (type == "dfa")
+    {
+        runDFA (llvmParser);
     }
 }

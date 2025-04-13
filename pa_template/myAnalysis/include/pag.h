@@ -150,6 +150,17 @@ public:
         return imptNodes;
     }
 
+    inline PAGNode* getValueNode (llvm::Value* val)
+    {
+        auto it = valueToNode.find(val);
+        if (it != valueToNode.end())
+        {
+            return it->second;
+        }
+
+        return NULL;
+    }
+
 private:
     inline unsigned getNextNodeId () 
     {
@@ -177,18 +188,6 @@ private:
 
         addNode(nodeId, valNode);
         return valNode;
-    }
-
-
-    inline PAGNode* getValueNode (llvm::Value* val)
-    {
-        auto it = valueToNode.find(val);
-        if (it != valueToNode.end())
-        {
-            return it->second;
-        }
-
-        return NULL;
     }
 
     inline void addGlobalNode ()
@@ -313,72 +312,69 @@ private:
         return llvmParser->getValueLabel (V);
     }
 
-    inline void handleIntraEdge(llvm::Instruction* inst)
+    inline void handleIntraEdge (llvm::Instruction* inst)
     {
-    // 1) p = &a (“address-of”)
-    if (llvmParser->isAddressOf(inst))
-    {
-        // e.g., getOperandsAddressOf() returns (pointerVal, memLocVal)
-        auto [pointerVal, memLocVal] = llvmParser->getOperandsAddressOf(inst);
+        // 1) p = &a  (“address-of”)
+        if (llvmParser->isAddressOf(inst))
+        {
+            // e.g., getOperandsAddressOf() returns (pointerVal, memLocVal)
+            auto [pointerVal, memLocVal] = llvmParser->getOperandsAddressOf(inst);
+                    
+            PAGNode *ptrNode   = addValueNode(pointerVal);
+            PAGNode *memLocNode= addValueNode(memLocVal);
+                    
+            // Usually “ADDR_OF” means we conceptually link memLoc -> ptr
+            PAGEdge *addrEdge = new PAGEdge(memLocNode, ptrNode, CST_ADDR_OF);
+            addEdge(addrEdge);  
+        }
                 
-        PAGNode *ptrNode    = addValueNode(pointerVal);
-        PAGNode *memLocNode = addValueNode(memLocVal);
-                
-        // Usually “ADDR_OF” means we conceptually link memLoc -> ptr
-        PAGEdge *addrEdge = new PAGEdge(memLocNode, ptrNode, CST_ADDR_OF);
-        addEdge(addrEdge);  
-    }
-            
-    // 2) q = p (“assignment”)
-    else if (llvmParser->isAssignment(inst))
-    {   
-        // For an assignment the parser returns (dstVal, srcVal)
-        auto [dstVal, srcVal] = llvmParser->getOperandsAssignment(inst);
-        PAGNode *dstNode = addValueNode(dstVal);
-        PAGNode *srcNode = addValueNode(srcVal);
-        // Create a COPY edge representing that the value from src flows to dst.
-        PAGEdge *copyEdge = new PAGEdge(dstNode, srcNode, CST_COPY);
-        addEdge(copyEdge);
+        // 2) q = p   (“assignment”)
+        else if (llvmParser->isAssignment(inst))
+        {
+            // dstVal = srcVal
+            auto [srcVal, dstVal] = llvmParser->getOperandsAssignment(inst);
+
+            PAGNode *srcNode = addValueNode(srcVal);
+            PAGNode *dstNode = addValueNode(dstVal);
+
+            PAGEdge *copyEdge = new PAGEdge(srcNode, dstNode, CST_COPY);
+            addEdge(copyEdge);
+        }
+
+        // 3) *p = q  (“store”)
+        else if (llvmParser->isStore(inst))
+        {
+            // e.g., *ptrVal = srcVal
+            auto [ptrVal, srcVal] = llvmParser->getOperandsStore(inst);
+
+            PAGNode *ptrNode = addValueNode(ptrVal);
+            PAGNode *srcNode = addValueNode(srcVal);
+
+            PAGEdge *storeEdge = new PAGEdge(srcNode, ptrNode, CST_STORE);
+            addEdge(storeEdge);   
+        }
+
+        // 4) q = *p  (“load”)
+        else if (llvmParser->isLoad(inst))
+        {
+            // e.g., dstVal = *ptrNode
+            auto [ptrVal, dstVal] = llvmParser->getOperandsLoad(inst);
+
+            PAGNode *ptrNode = addValueNode(ptrVal);
+            PAGNode *valNode = addValueNode(dstVal);
+
+            PAGEdge *loadEdge = new PAGEdge(ptrNode, valNode, CST_LOAD);
+            addEdge(loadEdge);
+        }
         
+        // 5) other instructions
+        else
+        {
+            //llvm::errs()<<*inst<<"\n";
+        }
+
+        return;
     }
-
-    // 3) *p = q (“store”)
-    else if (llvmParser->isStore(inst))
-    {
-        // For a store the parser returns (ptrVal, srcVal) representing *ptrVal = srcVal.
-        auto [ptrVal, srcVal] = llvmParser->getOperandsStore(inst);
-        PAGNode *ptrNode = addValueNode(ptrVal);
-        PAGNode *srcNode = addValueNode(srcVal);
-        // If a memory location is found, create a STORE edge representing that src flows into that location.
-        PAGEdge *storeEdge = new PAGEdge(srcNode, ptrNode, CST_STORE);
-        addEdge(storeEdge);
-    }
-
-    // 4) q = *p (“load”)
-    else if (llvmParser->isLoad(inst))
-    {
-        // For a load the parser returns (dstVal, ptrVal) representing dstVal = *ptrVal.
-        auto [dstVal, ptrVal] = llvmParser->getOperandsLoad(inst);
-        PAGNode *dstNode = addValueNode(dstVal);
-        PAGNode *ptrNode = addValueNode(ptrVal);
-
-        // Find the memory location node associated with the pointer.
-        // If a memory location is found, create a LOAD edge representing that the value in that memory flows to dst.
-
-        PAGEdge *loadEdge = new PAGEdge(dstNode, ptrNode, CST_LOAD);
-        addEdge(loadEdge);
-
-    }
-    
-    // 5) other instructions
-    else
-    {
-        // Optionally, handle or log other kinds of instructions.
-        // llvm::errs() << *inst << "\n";
-    }
-
-    return;
-}
 
     inline void handleInterEdge (llvm::CallBase *callInst, llvm::Function *calleePtr=NULL)
     {

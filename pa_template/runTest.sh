@@ -89,4 +89,8 @@ if [ "$FUNCTION" = "all" ] || [ "$FUNCTION" = "pta" ]; then
     runAnalysis pta
 fi
 
+if [ "$FUNCTION" = "all" ] || [ "$FUNCTION" = "dfa" ]; then
+    runAnalysis dfa
+fi
+
 echo "All benchmark analyses finished."
