@@ -1,5 +1,5 @@
 # Program-Analysis-Project 5
-1. This tool can detect unused variable assignments and overwritten values in every function
+1. This tool can detect unused variable assignments and overwritten values in each function
 2. The algorithm is in file ./DeadCodeDetector.cpp
 3. Test cases are in ./testcases
 4. output example:
