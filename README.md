@@ -3,8 +3,8 @@
 2. The algorithm is in file ./DeadCodeDetector.cpp
 3. Test cases are in ./testcases
 4. output example:
-    [DeadCodeDetector] Function baz
-    -> Dead def at line 3:   %3 = fmul double %0, 2.000000e+00, !dbg !17
+    [DeadCodeDetector] Function baz  
+    -> Dead def at line 3:   %3 = fmul double %0, 2.000000e+00, !dbg !17  
     -> Dead def at line 2:   %2 = fmul double %0, 3.140000e+00, !dbg !15
 
 run the tool: the tool can be executed in CS6890 VM enviroment  
